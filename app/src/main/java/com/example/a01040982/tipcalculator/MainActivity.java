@@ -1,5 +1,6 @@
 package com.example.a01040982.tipcalculator;
 
+import android.annotation.SuppressLint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -13,16 +14,22 @@ import android.widget.TextView;
 
 import java.text.NumberFormat;
 
+import static android.support.constraint.ConstraintSet.INVISIBLE;
+import static android.support.constraint.ConstraintSet.VISIBLE;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button plusBtn;
     private Button minusButton;
+    private Button applyButton;
 
     private  TextView billAmount;
     private TextView defaultTipPercentage;
     private TextView tipAmount;
     private TextView totalAmount;
+    private  TextView perPerson;
     private TextView perPersonAmount;
+    private TextView errorMessage;
 
     private RadioGroup radioBtnGroup;
     private RadioButton noneRadioBtn;
@@ -34,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String[] items = {"No", "Divided between 2", "Divided between 3", "Divided between 4"};
 
 
+    @SuppressLint("WrongConstant")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,17 +49,23 @@ public class MainActivity extends AppCompatActivity {
 
         plusBtn = (Button) findViewById(R.id.plusButton);
         minusButton = (Button) findViewById(R.id.minusButton);
+        applyButton = (Button) findViewById(R.id.applyBtn);
 
         billAmount = (TextView)findViewById(R.id.inputBillAmount);
         defaultTipPercentage = (TextView)findViewById(R.id.defaultPercent);
         tipAmount = (TextView)findViewById(R.id.defaultTip);
         totalAmount = (TextView)findViewById(R.id.defaultTotal);
+        perPerson = (TextView) findViewById(R.id.perPerson) ;
         perPersonAmount = (TextView)findViewById(R.id.perPersonAmount);
+        errorMessage = (TextView) findViewById(R.id.displayError) ;
 
         radioBtnGroup = (RadioGroup) findViewById(R.id.radionBtnGroup) ;
         noneRadioBtn = (RadioButton) findViewById(R.id.noneRadioBtn);
         tipRadioBtn = (RadioButton) findViewById(R.id.tipRadioBtn);
         totalRadioBtn = (RadioButton) findViewById(R.id.totalRadioBtn);
+
+        perPerson.setVisibility(INVISIBLE);
+        perPersonAmount.setVisibility(INVISIBLE);
 
         plusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,6 +175,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        applyButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v){
+                MainActivity.this.onClickOnApplyBtn();
+            }
+        });
+
 
     }
     public void onPercentageIncrease(){
@@ -193,5 +213,30 @@ public class MainActivity extends AppCompatActivity {
         totalAmount.setText(String.valueOf(totalamount));
 
         perPersonAmount.setText(currency.format(totalamount));
+    }
+
+    public void onClickOnApplyBtn() {
+        if(billAmount.getText().toString().equals("")){
+            errorMessage.setText("Please enter a bill amount.");
+        }
+        else {
+            errorMessage.setText("");
+            NumberFormat currency = NumberFormat.getCurrencyInstance();
+
+            if(tipAmount.getText().equals("0.00") || totalAmount.getText().equals("0.00")){
+                float billamount = (float) Integer.parseInt(billAmount.getText().toString());
+                int defaulPercentage = Integer.parseInt(defaultTipPercentage.getText().toString());
+
+                float totalamount = (float)(billamount * (float)defaulPercentage/100);
+                totalAmount.setText(String.valueOf(billamount + totalamount));
+                perPersonAmount.setText(String.valueOf(billamount + totalamount));
+                perPerson.setVisibility(VISIBLE);
+                perPersonAmount.setVisibility(VISIBLE);
+            }
+            else {
+                perPerson.setVisibility(VISIBLE);
+                perPersonAmount.setVisibility(VISIBLE);
+            }
+        }
     }
 }
