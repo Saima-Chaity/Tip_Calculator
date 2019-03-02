@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -21,6 +23,12 @@ public class MainActivity extends AppCompatActivity {
     private TextView tipAmount;
     private TextView totalAmount;
     private TextView perPersonAmount;
+
+    private RadioGroup radioBtnGroup;
+    private RadioButton noneRadioBtn;
+    private RadioButton tipRadioBtn;
+    private RadioButton totalRadioBtn;
+    private RadioButton radiobtn;
 
     private Spinner spinner;
     private static final String[] items = {"No", "Divided between 2", "Divided between 3", "Divided between 4"};
@@ -40,6 +48,11 @@ public class MainActivity extends AppCompatActivity {
         totalAmount = (TextView)findViewById(R.id.defaultTotal);
         perPersonAmount = (TextView)findViewById(R.id.perPersonAmount);
 
+        radioBtnGroup = (RadioGroup) findViewById(R.id.radionBtnGroup) ;
+        noneRadioBtn = (RadioButton) findViewById(R.id.noneRadioBtn);
+        tipRadioBtn = (RadioButton) findViewById(R.id.tipRadioBtn);
+        totalRadioBtn = (RadioButton) findViewById(R.id.totalRadioBtn);
+
         plusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
@@ -54,6 +67,60 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.onPercentageDecrease();
             }
 
+        });
+
+        radioBtnGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                String totalamount = totalAmount.getText().toString();
+                String tipamount = tipAmount.getText().toString();
+                int defaulPercentage = Integer.parseInt(defaultTipPercentage.getText().toString());
+                float billamount = (float) Integer.parseInt(billAmount.getText().toString());
+                float tipAmountOnNoneRadioBtn = (float)(billamount * (float)defaulPercentage / 100);
+                float totalAmountOnNoneRadioBtn = (float)(billamount + tipAmountOnNoneRadioBtn);
+
+                switch(checkedId){
+                    case R.id.noneRadioBtn:
+                        tipAmount.setText(String.format("%.2f",tipAmountOnNoneRadioBtn));
+                        totalAmount.setText(String.format("%.2f",totalAmountOnNoneRadioBtn));
+                        break;
+
+                    case R.id.tipRadioBtn:
+                        String tipAmountToRound = tipAmount.getText().toString();
+                        double roundingTip = Math.round(Double.valueOf(tipAmountToRound));
+                        if( roundingTip > Double.valueOf(tipamount)){
+                            double incresedTipAmount = roundingTip - Double.valueOf(tipamount);
+                            double newTipAmount = Double.valueOf(tipamount) + incresedTipAmount;
+                            tipAmount.setText(String.format("%.2f", newTipAmount));
+                            double newTotalAmount = incresedTipAmount + Double.valueOf(totalamount);
+                            totalAmount.setText(String.format("%.2f", newTotalAmount));
+                        }
+                        double decreasedTipAmount = Double.valueOf(tipamount) - roundingTip;
+                        double newTipAmount = Double.valueOf(tipamount) - decreasedTipAmount;
+                        tipAmount.setText(String.format("%.2f",newTipAmount));
+                        double newTotalAmount = Double.valueOf(totalamount) - decreasedTipAmount;
+                        totalAmount.setText(String.format("%.2f",newTotalAmount));
+                        break;
+
+                    case R.id.totalRadioBtn:
+                        String totalAmountToRound = totalAmount.getText().toString();
+                        double roundingTotal = Math.round(Double.valueOf(totalAmountToRound));
+                        if( roundingTotal > Double.valueOf(totalamount)){
+                            double incresedTotalAmount = roundingTotal - Double.valueOf(totalamount);
+                            double newTotalamount = Double.valueOf(totalamount) + incresedTotalAmount;
+                            totalAmount.setText(String.format("%.2f",newTotalamount));
+                            double newTipamount = incresedTotalAmount + Double.valueOf(tipamount);
+                            tipAmount.setText(String.format("%.2f",newTipamount));
+                        }
+                        double decreasedTotalAmount = Double.valueOf(totalamount) - roundingTotal;
+                        double newTotalamount = Double.valueOf(totalamount) - decreasedTotalAmount;
+                        totalAmount.setText(String.format("%.2f",newTotalamount));
+                        double newTipamount = Double.valueOf(tipamount) - decreasedTotalAmount;
+                        tipAmount.setText(String.format("%.2f", newTipamount));
+                        break;
+                }
+            }
         });
 
         spinner = (Spinner)findViewById(R.id.spinner);
