@@ -12,6 +12,7 @@ public class SummaryActivity extends AppCompatActivity {
 
     public TextView totalAmountToDisplay;
     public TextView splitAmountToDisplay;
+    public TextView splitBetweenToDisplay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +28,20 @@ public class SummaryActivity extends AppCompatActivity {
         String totalAmount = intent.getStringExtra("TotalAmount");
 
         totalAmountToDisplay = (TextView) findViewById(R.id.totalAmountDisplay);
-        totalAmountToDisplay.setText(currency.format(Double.valueOf(totalAmount)));
+        totalAmountToDisplay.setText(totalAmount);
 
         String getSplitedAmount = intent.getStringExtra("SpilitedAmount");
         splitAmountToDisplay = (TextView) findViewById(R.id.splitAmountView);
         splitAmountToDisplay.setText(getSplitedAmount);
 
+        String getSplitedBetween = intent.getStringExtra("SplitedBetween");
+        splitBetweenToDisplay = (TextView) findViewById(R.id.splitedBetween);
+        if(Integer.parseInt(getSplitedBetween) == 0){
+            splitBetweenToDisplay.setText("None");
+        }
+        else{
+            splitBetweenToDisplay.setText(String.valueOf(Integer.parseInt(getSplitedBetween) + 1));
+        }
     }
 
     @Override

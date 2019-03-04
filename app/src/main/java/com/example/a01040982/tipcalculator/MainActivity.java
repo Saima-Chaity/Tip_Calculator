@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private Spinner spinner;
     private static final String[] items = {"No", "Divided between 2", "Divided between 3", "Divided between 4"};
 
+    private MenuItem summary;
 
     @SuppressLint("WrongConstant")
     @Override
@@ -304,13 +305,15 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.summary:
                 Intent intent = new Intent(MainActivity.this, SummaryActivity.class);
+                NumberFormat currency = NumberFormat.getCurrencyInstance();
                 if(totalAmount.getText().equals("0.00")){
                     intent.putExtra("TotalAmount", String.valueOf(perPersonAmount.getText()));
                 }
                 else {
-                    intent.putExtra("TotalAmount", String.valueOf(totalAmount.getText()));
+                    intent.putExtra("TotalAmount", currency.format(Double.valueOf(String.valueOf(totalAmount.getText()))));
                 }
                 intent.putExtra("SpilitedAmount", String.valueOf(perPersonAmount.getText()));
+                intent.putExtra("SplitedBetween", String.valueOf(spinner.getSelectedItemPosition()));
                 startActivity(intent);
                 return true;
             default:
