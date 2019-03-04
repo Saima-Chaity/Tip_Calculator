@@ -18,6 +18,8 @@ public class SummaryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_summary);
 
+        this.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         MainActivity mainActivity = new MainActivity();
         NumberFormat currency = NumberFormat.getCurrencyInstance();
 
