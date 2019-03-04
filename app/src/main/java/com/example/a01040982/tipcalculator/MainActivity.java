@@ -1,11 +1,13 @@
 package com.example.a01040982.tipcalculator;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.support.v4.view.MenuCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -248,5 +250,48 @@ public class MainActivity extends AppCompatActivity {
 
         MenuCompat.setGroupDividerEnabled(menu, true);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id){
+            case R.id.increaseTip:
+                MainActivity.this.onPercentageIncrease();
+                return true;
+            case R.id.decreaseTip:
+                MainActivity.this.onPercentageDecrease();
+                return true;
+            case R.id.applyCalculation:
+                MainActivity.this.onClickOnApplyBtn();
+                return true;
+            case R.id.resetView:
+                if(noneRadioBtn.isChecked())
+                {
+                    noneRadioBtn.setChecked(true);
+                    tipRadioBtn.setChecked(false);
+                    totalRadioBtn.setChecked(false);
+                }
+                else if(noneRadioBtn.isChecked()){
+                    noneRadioBtn.setChecked(true);
+                    tipRadioBtn.setChecked(false);
+                    totalRadioBtn.setChecked(false);
+                }
+                else {
+                    noneRadioBtn.setChecked(true);
+                    tipRadioBtn.setChecked(false);
+                    totalRadioBtn.setChecked(false);
+                }
+                spinner.setSelection(0);
+                billAmount.setText("");
+                defaultTipPercentage.setText("15");
+                tipAmount.setText("0.00");
+                totalAmount.setText("0.00");
+                perPerson.setVisibility(View.INVISIBLE);
+                perPersonAmount.setVisibility(View.INVISIBLE);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
