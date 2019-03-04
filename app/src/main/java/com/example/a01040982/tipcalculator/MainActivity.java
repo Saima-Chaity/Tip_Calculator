@@ -290,6 +290,10 @@ public class MainActivity extends AppCompatActivity {
                 perPerson.setVisibility(View.INVISIBLE);
                 perPersonAmount.setVisibility(View.INVISIBLE);
                 return true;
+            case R.id.summary:
+                Intent intent = new Intent(MainActivity.this, SummaryActivity.class);
+                startActivity(intent);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
