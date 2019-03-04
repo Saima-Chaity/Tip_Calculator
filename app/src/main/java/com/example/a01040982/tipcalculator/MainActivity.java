@@ -292,6 +292,13 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.summary:
                 Intent intent = new Intent(MainActivity.this, SummaryActivity.class);
+                if(totalAmount.getText().equals("0.00")){
+                    intent.putExtra("TotalAmount", String.valueOf(perPersonAmount.getText()));
+                }
+                else {
+                    intent.putExtra("TotalAmount", String.valueOf(totalAmount.getText()));
+                }
+                intent.putExtra("SpilitedAmount", String.valueOf(perPersonAmount.getText()));
                 startActivity(intent);
                 return true;
             default:
