@@ -1,8 +1,11 @@
 package com.example.a01040982.tipcalculator;
 
 import android.annotation.SuppressLint;
+import android.support.v4.view.MenuCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -180,8 +183,6 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this.onClickOnApplyBtn();
             }
         });
-
-
     }
     public void onPercentageIncrease(){
 
@@ -238,5 +239,14 @@ public class MainActivity extends AppCompatActivity {
                 perPersonAmount.setVisibility(VISIBLE);
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.tip_calculator_menu, menu);
+
+        MenuCompat.setGroupDividerEnabled(menu, true);
+        return super.onCreateOptionsMenu(menu);
     }
 }

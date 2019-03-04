@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:id="@+id/group1">
+        <item
+            android:id="@+id/increaseTip"
+            android:title="Increase Tip" />
+        <item
+            android:id="@+id/decreaseTip"
+            android:title="Decrease Tip" />
+        <item
+            android:id="@+id/applyCalculation"
+            android:title="Apply" />
+    </group>
+
+    <group android:id="@+id/group2">
+        <item
+            android:id="@+id/resetView"
+            android:title="Reset" />
+    </group>
+    <group android:id="@+id/group3">
+        <item
+            android:id="@+id/summary"
+            android:title="Summary" />
+    </group>
+
+</menu>
