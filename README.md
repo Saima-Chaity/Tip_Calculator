@@ -12,7 +12,7 @@ This is a simple tip calculator to calculate the tip amount based on the total b
 
 ### Screenshots
 ### Main page : 
-![2](https://user-images.githubusercontent.com/31779751/54503999-f7e66a80-48ee-11e9-97bd-c068e5db6bbf.JPG)
+![Capture1](https://user-images.githubusercontent.com/31779751/54504420-ce2e4300-48f0-11e9-92fe-786f5f4a50a9.JPG)
 
 ### Details summary page : 
-![3](https://user-images.githubusercontent.com/31779751/54504013-0765b380-48ef-11e9-8f9c-9dbaf2ba465b.JPG)
+![2s](https://user-images.githubusercontent.com/31779751/54504410-c8d0f880-48f0-11e9-99a1-f1b7bce4b0a8.JPG)
